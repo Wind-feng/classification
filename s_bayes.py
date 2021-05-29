@@ -41,4 +41,4 @@ def s_MultinomialNB():
 
 if __name__ == '__main__':
     s_GaussianNB()
-    # s_MultinomialNB()
+    s_MultinomialNB()

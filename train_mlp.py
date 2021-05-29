@@ -9,11 +9,11 @@ from MLP import MLP
 import visdom
 from tools import plot_confusion_matrix
 import sklearn.metrics as m
-import numpy
+
 
 batchsz = 32
 lr = 1e-3
-epoches = 2
+epoches = 560
 torch.manual_seed(1234)
 file_path = "dataset/League of Legends.csv"
 
@@ -23,7 +23,7 @@ test_db = MyDataSet(file_path, mode='test')
 
 train_loader = DataLoader(train_db, batch_size=batchsz, shuffle=True)
 val_loader = DataLoader(val_db, batch_size=batchsz)
-test_loader = DataLoader(test_db, batch_size=1)
+test_loader = DataLoader(test_db, batch_size=batchsz)
 viz = visdom.Visdom()
 
 
@@ -49,6 +49,7 @@ def test_evaluate(model, loader):
                 y_true.append(i)
             for j in result.numpy():
                 predict.append(j)
+
     print(classification_report(y_true, predict))
     plot_confusion_matrix(confusion_matrix(y_true, predict), classes=range(2), title='confusion matrix')
     print("混淆矩阵")
