@@ -1,22 +1,20 @@
 import torch
 from torch import optim, nn
 from torch.utils.data import DataLoader
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import confusion_matrix
-from sklearn.metrics import classification_report
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 from MyDataSet import MyDataSet
 from MLP import MLP
 import visdom
 from tools import plot_confusion_matrix
 import sklearn.metrics as m
 
-
 batchsz = 32
-lr = 1e-3
+lr = 1e-3  # 学习率
 epoches = 560
 torch.manual_seed(1234)
 file_path = "dataset/League of Legends.csv"
 
+# 读取数据
 train_db = MyDataSet(file_path, mode='train')
 val_db = MyDataSet(file_path, mode='val')
 test_db = MyDataSet(file_path, mode='test')
@@ -27,7 +25,13 @@ test_loader = DataLoader(test_db, batch_size=batchsz)
 viz = visdom.Visdom()
 
 
+# 计算正确率
 def evaluate(model, loader):
+    """
+    :param model: 网络模型
+    :param loader: 数据集
+    :return: 正确率
+    """
     correct = 0
     total = len(loader.dataset)
     for x, y in loader:
@@ -38,7 +42,13 @@ def evaluate(model, loader):
     return correct / total
 
 
+# 计算分类的各种指标
 def test_evaluate(model, loader):
+    """
+       :param model: 网络模型
+       :param loader: 数据集
+       :return: 正确率
+    """
     y_true = []
     predict = []
     for x, y in loader:
@@ -59,21 +69,19 @@ def test_evaluate(model, loader):
 
 
 def main():
-    model = MLP(16, 2)
-    optimizer = optim.Adam(model.parameters(), lr=lr)
-    criteon = nn.CrossEntropyLoss()
+    model = MLP(16, 2)  # 初始化模型
+    optimizer = optim.Adam(model.parameters(), lr=lr)  # 设置Adam优化器
+    criterion = nn.CrossEntropyLoss()    # 设置损失函数
 
     best_epoch, best_acc = 0, 0
-    global_step = 0
-    viz.line([0], [-1], win='loss', opts=dict(title='loss'))
-    viz.line([0], [-1], win='val_acc', opts=dict(title='val_acc'))
+    viz.line([0], [-1], win='loss', opts=dict(title='loss'))   # visdom画loss图
+    viz.line([0], [-1], win='val_acc', opts=dict(title='val_acc'))  # visdom画val_acc图
 
     for epoch in range(epoches):
         for step, (x, y) in enumerate(train_loader):
             # x:[b,16] ,y[b]
             logits = model(x)
-            loss = criteon(logits, y)
-
+            loss = criterion(logits, y)
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()

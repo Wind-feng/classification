@@ -10,12 +10,17 @@ target_names = ['class 0', 'class 1']
 
 
 def s_GaussianNB():
+    # 初始化高斯朴素贝叶斯模型
     gnb = GaussianNB()
+    # 获取训练数据与测试数据
     file_name = "dataset/League of Legends.csv"
     X_train, X_test, y_train, y_test = dataLoader(file_name)
+    # 训练
     gnb = gnb.fit(X_train, y_train)
+    # 预测
     predict = gnb.predict(X_test)
 
+    # 输出评价指标
     print(classification_report(y_test, predict))
     plot_confusion_matrix(confusion_matrix(y_test, predict), classes=range(2), title='confusion matrix')
     print("混淆矩阵")
@@ -25,12 +30,17 @@ def s_GaussianNB():
 
 
 def s_MultinomialNB():
+    # 初始化多项式朴素贝叶斯模型
     gnb = MultinomialNB()
+    # 获取训练数据与测试数据
     file_name = "dataset/League of Legends.csv"
     X_train, X_test, y_train, y_test = dataLoader(file_name)
+    # 训练
     gnb = gnb.fit(X_train, y_train)
+    # 预测
     predict = gnb.predict(X_test)
 
+    # 输出评价指标
     print(classification_report(y_test, predict))
     plot_confusion_matrix(confusion_matrix(y_test, predict), classes=range(2), title='confusion matrix')
     print("混淆矩阵")
