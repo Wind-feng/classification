@@ -33,6 +33,7 @@ python train_mlp.py
 ```
 详细的实现过程解释，请参考代码中的注释。
 ```
+项目地址:https://gitee.com/windclub/ml_sort.git
 
 
 
