@@ -25,7 +25,7 @@ python train_mlp.py
 ```
 #### 各个代码功能介绍
 1.  dataloader.py 负责从csv中读取数据，并将数据集随机划分。
-2.  MyDataSet.py 实现自pytorch的为MLP划分数据的文件
+2.  MyDataSet.py 实现自pytorch的DataSet为MLP模型划分数据
 3.  MLP.py 利用pytorch实现的的多层感知器的网络结构
 4.  s_bayes.py 贝叶斯算法
 5.  s_svm.py 支持向量机算法
