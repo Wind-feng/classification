@@ -16,8 +16,8 @@ class MyDataSet(Dataset):
         """
         super(MyDataSet, self).__init__()
 
-        self.mode = mode
-        self.root = root
+        self.mode = mode   # 设置读取读取数据集的模式
+        self.root = root   # 数据集存放的路径
         label = []
         with open(root, 'r') as f:    # 从csv中读取数据
             reader = csv.reader(f)
