@@ -7,6 +7,7 @@ from MLP import MLP
 import visdom
 from tools import plot_confusion_matrix
 import sklearn.metrics as m
+from tqdm import tqdm
 
 batchsz = 32
 lr = 1e-3  # 学习率
@@ -78,7 +79,7 @@ def main():
     viz.line([0], [-1], win='val_acc', opts=dict(title='val_acc'))  # visdom画val_acc图
 
     for epoch in range(epoches):
-        for step, (x, y) in enumerate(train_loader):
+        for step, (x, y) in enumerate(tqdm(train_loader)):
             # x:[b,16] ,y[b]
             logits = model(x)
             loss = criterion(logits, y)
