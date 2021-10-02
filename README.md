@@ -1,4 +1,4 @@
-### ml_sort
+### ml_classification
 
 #### 介绍
 本实验使用机器学习算法中的支持向量机、高斯朴素贝叶斯、多项式朴素贝叶斯、多层感知器模型根据League of Legends中的数据
